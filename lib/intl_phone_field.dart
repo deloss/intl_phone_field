@@ -105,6 +105,8 @@ class IntlPhoneField extends StatefulWidget {
   ///    [TextInputAction.previous] for [textInputAction].
   final void Function(String)? onSubmitted;
 
+  final void Function()? onEditingComplete;
+
   /// If false the widget is "disabled": it ignores taps, the [TextFormField]'s
   /// [decoration] is rendered in grey,
   /// [decoration]'s [InputDecoration.counterText] is set to `""`,
@@ -261,6 +263,7 @@ class IntlPhoneField extends StatefulWidget {
     this.style,
     this.dropdownTextStyle,
     this.onSubmitted,
+    this.onEditingComplete,
     this.validator,
     this.onChanged,
     this.countries,
@@ -395,6 +398,7 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
       cursorWidth: widget.cursorWidth,
       showCursor: widget.showCursor,
       onFieldSubmitted: widget.onSubmitted,
+      onEditingComplete: widget.onEditingComplete,
       decoration: widget.decoration.copyWith(
         prefixIcon: _buildFlagsButton(),
         counterText: !widget.enabled ? '' : null,
