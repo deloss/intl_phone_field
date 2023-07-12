@@ -245,7 +245,7 @@ class IntlPhoneField extends StatefulWidget {
   //enable the autofill hint for phone number
   final bool disableAutoFillHints;
 
-  IntlPhoneField({
+  const IntlPhoneField({
     Key? key,
     this.initialCountryCode,
     this.languageCode = 'en',
@@ -274,8 +274,7 @@ class IntlPhoneField extends StatefulWidget {
     this.inputFormatters,
     this.enabled = true,
     this.keyboardAppearance,
-    @Deprecated('Use searchFieldInputDecoration of PickerDialogStyle instead')
-        this.searchText = 'Search country',
+    @Deprecated('Use searchFieldInputDecoration of PickerDialogStyle instead') this.searchText = 'Search country',
     this.dropdownIconPosition = IconPosition.leading,
     this.dropdownIcon = const Icon(Icons.arrow_drop_down),
     this.autofocus = false,
@@ -315,25 +314,20 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
     if (widget.initialCountryCode == null && number.startsWith('+')) {
       number = number.substring(1);
       // parse initial value
-      _selectedCountry = countries.firstWhere(
-          (country) => number.startsWith(country.fullCountryCode),
+      _selectedCountry = countries.firstWhere((country) => number.startsWith(country.fullCountryCode),
           orElse: () => _countryList.first);
 
       // remove country code from the initial number value
-      number = number.replaceFirst(
-          RegExp("^${_selectedCountry.fullCountryCode}"), "");
+      number = number.replaceFirst(RegExp("^${_selectedCountry.fullCountryCode}"), "");
     } else {
-      _selectedCountry = _countryList.firstWhere(
-          (item) => item.code == (widget.initialCountryCode ?? 'US'),
+      _selectedCountry = _countryList.firstWhere((item) => item.code == (widget.initialCountryCode ?? 'US'),
           orElse: () => _countryList.first);
 
       // remove country code from the initial number value
       if (number.startsWith('+')) {
-        number = number.replaceFirst(
-            RegExp("^\\+${_selectedCountry.fullCountryCode}"), "");
+        number = number.replaceFirst(RegExp("^\\+${_selectedCountry.fullCountryCode}"), "");
       } else {
-        number = number.replaceFirst(
-            RegExp("^${_selectedCountry.fullCountryCode}"), "");
+        number = number.replaceFirst(RegExp("^${_selectedCountry.fullCountryCode}"), "");
       }
     }
 
@@ -377,7 +371,7 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
         ),
       ),
     );
-    if (this.mounted) setState(() {});
+    if (mounted) setState(() {});
   }
 
   @override
@@ -408,8 +402,7 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
         widget.onSaved?.call(
           PhoneNumber(
             countryISOCode: _selectedCountry.code,
-            countryCode:
-                '+${_selectedCountry.dialCode}${_selectedCountry.regionCode}',
+            countryCode: '+${_selectedCountry.dialCode}${_selectedCountry.regionCode}',
             number: value!,
           ),
         );
@@ -430,8 +423,7 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
       validator: (value) {
         if (value == null || !isNumeric(value)) return validatorMessage;
         if (!widget.disableLengthCheck) {
-          return value.length >= _selectedCountry.minLength &&
-                  value.length <= _selectedCountry.maxLength
+          return value.length >= _selectedCountry.minLength && value.length <= _selectedCountry.maxLength
               ? null
               : widget.invalidNumberMessage;
         }
@@ -456,32 +448,34 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
         decoration: widget.dropdownDecoration,
         child: InkWell(
           borderRadius: widget.dropdownDecoration.borderRadius as BorderRadius?,
+          onTap: widget.enabled ? _changeCountry : null,
           child: Padding(
             padding: widget.flagsButtonPadding,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(width: 4,),
+                const SizedBox(
+                  width: 4,
+                ),
                 if (widget.enabled &&
                     widget.showDropdownIcon &&
                     widget.dropdownIconPosition == IconPosition.leading) ...[
                   widget.dropdownIcon,
-                  SizedBox(width: 4),
+                  const SizedBox(width: 4),
                 ],
                 if (widget.showCountryFlag) ...[
-                  kIsWeb ?
-                  Image.asset(
-                              'assets/flags/${_selectedCountry.code.toLowerCase()}.png',
-                              package: 'intl_phone_field',
-                              width: 32,
-                            )
-                            :
-                  Text(
-                    _selectedCountry.flag,
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  SizedBox(width: 8),
+                  kIsWeb
+                      ? Image.asset(
+                          'assets/flags/${_selectedCountry.code.toLowerCase()}.png',
+                          package: 'intl_phone_field',
+                          width: 32,
+                        )
+                      : Text(
+                          _selectedCountry.flag,
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                  const SizedBox(width: 8),
                 ],
                 FittedBox(
                   child: Text(
@@ -492,14 +486,13 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
                 if (widget.enabled &&
                     widget.showDropdownIcon &&
                     widget.dropdownIconPosition == IconPosition.trailing) ...[
-                  SizedBox(width: 4),
+                  const SizedBox(width: 4),
                   widget.dropdownIcon,
                 ],
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
               ],
             ),
           ),
-          onTap: widget.enabled ? _changeCountry : null,
         ),
       ),
     );
